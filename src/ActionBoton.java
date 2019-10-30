@@ -33,14 +33,33 @@ public class ActionBoton implements ActionListener{
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if((((JButton)e.getSource()).getText()).equals(String.valueOf(MINA))) {
-			JOptionPane.showMessageDialog(null, "HAS PULSADO UNA MINA","FIN DEL JUEGO",1);
-			ventana.mostrarFinJuego(true);
-			
-		}else {
-			ventana.mostrarNumMinasAlrededor(posY, posX);
-			//ventana.botonesJuego[posY][posX].setText(Integer.toString(ventana.getJuego().getMinasAlrededor(posY, posX)));
-		}
+			if(ventana.getJuego().tablero[posY][posX]==MINA) {
+				ventana.puntuacion = 0;
+				JOptionPane.showMessageDialog(null, "HAS PULSADO UNA MINA","FIN DEL JUEGO",1);
+				ventana.mostrarFinJuego(true);
+			}else {
+				if(ventana.getJuego().esFinJuego()) {
+					JOptionPane.showMessageDialog(null, "ENHORABUENA","HAS GANADO",1);
+					ventana.mostrarFinJuego(false);
+				}else {
+					ventana.actualizarPuntuacion();
+					ventana.mostrarNumMinasAlrededor(posY, posX);
+				}
+				
+//			}
+		}//else {
+//			
+//			ventana.mostrarFinJuego(false);
+//		}
 	}
+//		if(ventana.getJuego().tablero[posY][posX]==MINA) {
+//			ventana.puntuacion = 0;
+//			JOptionPane.showMessageDialog(null, "HAS PULSADO UNA MINA","FIN DEL JUEGO",1);
+//			ventana.mostrarFinJuego(true);
+//		}else {
+//			ventana.actualizarPuntuacion();
+//			ventana.mostrarNumMinasAlrededor(posY, posX);
+//		}
+//	}
 
 }

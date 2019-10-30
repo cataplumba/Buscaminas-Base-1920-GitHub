@@ -37,6 +37,9 @@ public class VentanaPrincipal {
 
 	// LA VENTANA GUARDA UN CONTROL DE JUEGO:
 	ControlJuego juego;
+	
+	//Puntuacion entero
+	int puntuacion = 0;
 
 	// Constructor, marca el tamaño y el cierre del frame
 	public VentanaPrincipal() {
@@ -182,6 +185,8 @@ public class VentanaPrincipal {
 					}
 				}
 				inicializarListeners();
+				pantallaPuntuacion.setText("0");
+				puntuacion = 0;
 				refrescarPantalla();
 			}
 		});
@@ -200,12 +205,16 @@ public class VentanaPrincipal {
 	 */
 	public void mostrarNumMinasAlrededor(int i, int j) {
 		GridBagConstraints settings = new GridBagConstraints();
+		
 		JLabel nuevoPanel = new JLabel(Integer.toString(getJuego().getMinasAlrededor(i, j)));
 		settings.anchor = GridBagConstraints.CENTER;
 		settings.insets = new Insets(10,0,0,0);
 		panelesJuego[i][j].remove(botonesJuego[i][j]);
 		panelesJuego[i][j].add(nuevoPanel,settings);
 		panelesJuego[i][j].setBorder(BorderFactory.createLineBorder(Color.black));
+		if(getJuego().getMinasAlrededor(i, j)==0){
+			abrirAdyacentes(i, j);
+		}
 		refrescarPantalla();
 	}
 
@@ -222,7 +231,6 @@ public class VentanaPrincipal {
 		//JOptionPane.showMessageDialog(ventana, "FIN DEL JUEGO","HAS PULSADO UNA MINA",1);
 		for (int i = 0; i < botonesJuego.length; i++) {
 			for (int j = 0; j < botonesJuego[i].length; j++) {
-
 				botonesJuego[i][j].setEnabled(false);
 				refrescarPantalla();
 			}
@@ -233,7 +241,25 @@ public class VentanaPrincipal {
 	 * Método que muestra la puntuación por pantalla.
 	 */
 	public void actualizarPuntuacion() {
-		pantallaPuntuacion.setText(Integer.toString(getJuego().getPuntuacion()));
+		puntuacion++;
+		pantallaPuntuacion.setText(Integer.toString(puntuacion));
+	}
+	
+	/**
+	 * Comprueba las casillas de alrededor y, en caso de que sea 0, las abre
+	 * @param posY
+	 * @param posX
+	 */
+	public void abrirAdyacentes(int posY,int posX) {
+		for (int i = posY-1; i <= posY+1; i++) {
+			for (int j = posX-1; j <= posX+1; j++) {
+				if((i>=0)&&(j>=0)&&(i<juego.LADO_TABLERO)&&(j<juego.LADO_TABLERO)) {
+					if(panelesJuego[i][j].getComponent(0).getClass()==JButton.class) {
+						botonesJuego[i][j].doClick();
+					}
+				}
+			}
+		}
 	}
 
 	/**

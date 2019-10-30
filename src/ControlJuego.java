@@ -15,7 +15,7 @@ public class ControlJuego {
 	final int MINAS_INICIALES = 20;
 	final int LADO_TABLERO = 10;
 
-	private int [][] tablero;
+	int [][] tablero;
 	private int puntuacion;
 	
 	
@@ -27,6 +27,7 @@ public class ControlJuego {
 		inicializarPartida();
 	}
 	
+
 	
 	/**Método para generar un nuevo tablero de partida:
 	 * @pre: La estructura tablero debe existir. 
@@ -111,15 +112,7 @@ public class ControlJuego {
 	 * @return Devuelve verdadero si se han abierto todas las celdas que no son minas.
 	 **/
 	public boolean esFinJuego(){
-		boolean fin = true;
-		for (int i = 0; i < tablero.length; i++) {
-			for (int j = 0; j < tablero[i].length; j++) {
-				if(!String.valueOf(tablero[i][j]).equalsIgnoreCase("-")) {
-					fin = false;
-				}
-			}
-		};
-		return fin;
+		return puntuacion==(LADO_TABLERO*LADO_TABLERO-MINAS_INICIALES);
 	}
 	
 	
